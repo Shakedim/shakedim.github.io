@@ -1,644 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SHAKEDIM</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    min-height: 100%;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    background:
-        radial-gradient(circle at 50% 0%, rgba(150, 0, 255, 0.20), transparent 35%),
-        radial-gradient(circle at 10% 80%, rgba(0, 100, 255, 0.12), transparent 30%),
-        #05030a;
-    overflow-x: hidden;
-}
-
-/* BACKGROUND GRID */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(rgba(150, 0, 255, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(150, 0, 255, 0.045) 1px, transparent 1px);
-
-    background-size: 45px 45px;
-
-    mask-image: linear-gradient(
-        to bottom,
-        transparent,
-        black 20%,
-        black 80%,
-        transparent
-    );
-}
-
-/* PAGE */
-
-.page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 55px 20px;
-}
-
-/* MAIN CARD */
-
-.card {
-    width: 100%;
-    max-width: 560px;
-
-    padding: 42px 28px 32px;
-
-    border-radius: 28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30, 10, 45, 0.92),
-            rgba(7, 5, 15, 0.95)
-        );
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHAKEDIM</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(155, 0, 255, 0.22),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 80%,
+                    rgba(0, 100, 255, 0.14),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 90% 65%,
+                    rgba(255, 0, 200, 0.08),
+                    transparent 30%
+                ),
+                #05030a;
+        }
+
+        /* BACKGROUND GRID */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(150, 0, 255, 0.045) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(150, 0, 255, 0.045) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 20%,
+                black 80%,
+                transparent
+            );
+        }
+
+        /* PAGE */
+
+        .page {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+
+            padding: 55px 20px;
+        }
+
+        /* MAIN CARD */
+
+        .card {
+            width: 100%;
+            max-width: 560px;
+
+            padding: 42px 28px 30px;
+
+            position: relative;
+            z-index: 2;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30, 10, 45, 0.94),
+                    rgba(7, 5, 15, 0.96)
+                );
 
-    border: 1px solid rgba(190, 0, 255, 0.28);
+            border: 1px solid rgba(190, 0, 255, 0.28);
 
-    box-shadow:
-        0 0 30px rgba(160, 0, 255, 0.12),
-        inset 0 0 40px rgba(120, 0, 255, 0.035);
+            box-shadow:
+                0 0 30px rgba(160, 0, 255, 0.12),
+                inset 0 0 40px rgba(120, 0, 255, 0.035);
 
-    backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
 
-    position: relative;
-    z-index: 2;
-}
+        /* LOGO */
 
-/* LOGO */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-.logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 22px;
-}
+            margin-bottom: 20px;
+        }
 
-.logo {
-    width: 155px;
-    height: 155px;
+        .logo {
+            width: 155px;
+            height: 155px;
 
-    object-fit: contain;
-    display: block;
+            display: block;
 
-    filter:
-        drop-shadow(0 0 8px rgba(190, 0, 255, 0.8))
-        drop-shadow(0 0 22px rgba(80, 80, 255, 0.45));
+            object-fit: contain;
 
-    animation: logoGlow 4s ease-in-out infinite;
-}
+            filter:
+                drop-shadow(0 0 8px rgba(190, 0, 255, 0.8))
+                drop-shadow(0 0 22px rgba(80, 80, 255, 0.45));
 
-@keyframes logoGlow {
+            animation: logoGlow 4s ease-in-out infinite;
+        }
 
-    0%, 100% {
-        filter:
-            drop-shadow(0 0 8px rgba(190, 0, 255, 0.8))
-            drop-shadow(0 0 22px rgba(80, 80, 255, 0.45));
-    }
+        @keyframes logoGlow {
+            0%, 100% {
+                filter:
+                    drop-shadow(0 0 8px rgba(190, 0, 255, 0.8))
+                    drop-shadow(0 0 22px rgba(80, 80, 255, 0.45));
+            }
 
-    50% {
-        filter:
-            drop-shadow(0 0 13px rgba(220, 0, 255, 0.95))
-            drop-shadow(0 0 30px rgba(50, 100, 255, 0.6));
-    }
-}
+            50% {
+                filter:
+                    drop-shadow(0 0 14px rgba(220, 0, 255, 0.95))
+                    drop-shadow(0 0 30px rgba(50, 100, 255, 0.6));
+            }
+        }
 
-/* NAME */
+        /* NAME */
 
-h1 {
-    text-align: center;
+        h1 {
+            text-align: center;
 
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 3px;
+            font-size: 42px;
+            font-weight: 900;
 
-    background: linear-gradient(
-        90deg,
-        #ffffff,
-        #d900ff,
-        #8f5cff,
-        #ffffff
-    );
+            letter-spacing: 3px;
 
-    background-size: 250% auto;
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #d900ff,
+                    #8f5cff,
+                    #ffffff
+                );
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+            background-size: 250% auto;
 
-    animation: nameGradient 5s linear infinite;
-}
+            -webkit-background-clip: text;
+            background-clip: text;
 
-@keyframes nameGradient {
-    to {
-        background-position: 250% center;
-    }
-}
+            color: transparent;
 
-/* BIO */
+            animation: nameGradient 5s linear infinite;
+        }
 
-.subtitle {
-    text-align: center;
-    margin-top: 8px;
+        @keyframes nameGradient {
+            to {
+                background-position: 250% center;
+            }
+        }
 
-    color: rgba(255,255,255,0.62);
+        /* SUBTITLE */
 
-    font-size: 15px;
-    letter-spacing: 1px;
-}
+        .subtitle {
+            margin-top: 8px;
 
-/* LIVE STATUS */
+            text-align: center;
 
-.live-status {
-    display: none;
+            color: rgba(255, 255, 255, 0.62);
 
-    width: fit-content;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
 
-    margin: 18px auto 25px;
-    padding: 8px 17px;
+        /* LINKS */
 
-    border-radius: 999px;
+        .links {
+            display: flex;
+            flex-direction: column;
 
-    background: rgba(255, 0, 40, 0.08);
+            gap: 13px;
 
-    border: 1px solid rgba(255, 0, 55, 0.65);
+            margin-top: 30px;
+        }
 
-    color: #ff3854;
+        /* LINK BUTTON */
 
-    font-size: 13px;
-    font-weight: 900;
+        .link {
+            width: 100%;
+            min-height: 64px;
 
-    letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
 
-    box-shadow:
-        0 0 10px rgba(255, 0, 50, 0.45),
-        inset 0 0 10px rgba(255, 0, 50, 0.05);
+            padding: 0 22px;
 
-    animation: livePulse 1.5s ease-in-out infinite;
-}
+            position: relative;
 
-.live-status.active {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+            color: #fff;
+            text-decoration: none;
 
-.live-dot {
-    width: 8px;
-    height: 8px;
+            border-radius: 15px;
 
-    border-radius: 50%;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.035),
+                    rgba(255, 255, 255, 0.012)
+                );
 
-    background: #ff183c;
+            border: 1px solid rgba(180, 0, 255, 0.28);
 
-    box-shadow:
-        0 0 7px #ff183c,
-        0 0 15px #ff183c;
-}
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
 
-@keyframes livePulse {
+        .link:hover {
+            transform: translateY(-3px);
 
-    0%, 100% {
-        opacity: 1;
-    }
+            border-color: rgba(210, 0, 255, 0.85);
 
-    50% {
-        opacity: 0.65;
-    }
-}
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(150, 0, 255, 0.12),
+                    rgba(0, 180, 255, 0.045)
+                );
 
-/* SOCIAL LINKS */
+            box-shadow:
+                0 0 14px rgba(170, 0, 255, 0.25),
+                inset 0 0 18px rgba(150, 0, 255, 0.035);
+        }
 
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-}
+        /* ICON */
 
-/* BUTTON */
+        .icon {
+            width: 27px;
+            height: 27px;
 
-.link {
-    width: 100%;
-    min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    display: flex;
-    align-items: center;
+            margin-right: 15px;
 
-    position: relative;
+            color: #d400ff;
 
-    padding: 0 22px;
+            flex-shrink: 0;
+        }
 
-    border-radius: 15px;
+        .icon svg {
+            width: 100%;
+            height: 100%;
+        }
 
-    text-decoration: none;
-    color: white;
+        /* TEXT */
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,0.035),
-            rgba(255,255,255,0.015)
-        );
+        .link-name {
+            font-size: 15px;
+            font-weight: 800;
 
-    border: 1px solid rgba(180, 0, 255, 0.28);
+            letter-spacing: 1.2px;
+        }
 
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
-}
+        /* FOOTER */
 
-.link:hover {
-    transform: translateY(-3px);
+        .footer {
+            margin-top: 25px;
 
-    border-color: rgba(210, 0, 255, 0.85);
+            text-align: center;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(150, 0, 255, 0.12),
-            rgba(0, 180, 255, 0.045)
-        );
+            color: rgba(255, 255, 255, 0.30);
 
-    box-shadow:
-        0 0 14px rgba(170, 0, 255, 0.25),
-        inset 0 0 18px rgba(150, 0, 255, 0.035);
-}
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
 
-/* ICON */
+        /* MOBILE */
 
-.icon {
-    width: 27px;
-    height: 27px;
+        @media (max-width: 600px) {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            .page {
+                padding: 25px 13px;
+            }
 
-    margin-right: 15px;
+            .card {
+                padding: 32px 17px 25px;
 
-    color: #d400ff;
+                border-radius: 22px;
+            }
 
-    flex-shrink: 0;
-}
+            .logo {
+                width: 135px;
+                height: 135px;
+            }
 
-.icon svg {
-    width: 100%;
-    height: 100%;
-}
+            h1 {
+                font-size: 34px;
+            }
 
-/* TEXT */
+            .link {
+                min-height: 60px;
+            }
+        }
 
-.link-name {
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 1.2px;
-}
+        /* REDUCE ANIMATIONS FOR USERS WHO PREFER IT */
 
-/* KICK LIVE INDICATOR */
+        @media (prefers-reduced-motion: reduce) {
 
-.kick-live {
-    display: none;
+            .logo,
+            h1 {
+                animation: none;
+            }
 
-    margin-left: auto;
-
-    align-items: center;
-    gap: 7px;
-
-    color: #ff4057;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-.kick-live.active {
-    display: flex;
-}
-
-.kick-live-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #ff183c;
-
-    box-shadow:
-        0 0 6px #ff183c,
-        0 0 12px #ff183c;
-}
-
-/* FOOTER */
-
-.footer {
-    text-align: center;
-
-    margin-top: 25px;
-
-    color: rgba(255,255,255,0.30);
-
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .page {
-        padding: 25px 13px;
-    }
-
-    .card {
-        padding: 32px 17px 25px;
-        border-radius: 22px;
-    }
-
-    .logo {
-        width: 135px;
-        height: 135px;
-    }
-
-    h1 {
-        font-size: 34px;
-    }
-
-    .link {
-        min-height: 60px;
-    }
-}
-</style>
+            .link {
+                transition: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="page">
-
-    <main class="card">
-
-        <!-- LOGO -->
-        <div class="logo-wrapper">
-            <img
-                src="logo.png"
-                alt="SHAKEDIM"
-                class="logo"
-            >
-        </div>
-
-        <!-- NAME -->
-        <h1>SHAKEDIM</h1>
-
-        <div class="subtitle">
-            Streamer &amp; Content Creator
-        </div>
-
-        <!-- LIVE STATUS -->
-        <div id="liveStatus" class="live-status">
-            <span class="live-dot"></span>
-            LIVE NOW
-        </div>
-
-        <!-- LINKS -->
-        <div class="links">
-
-            <!-- DISCORD -->
-            <a
-                class="link"
-                href="https://discord.gg/djW2w2ZWRT"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19.54 0c1.1 0 2 .9 2 2v20c0 1.1-.9 2-2 2H4.46c-1.1 0-2-.9-2-2V2c0-1.1.9-2 2-2h15.08ZM8.6 7.4c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Zm6.8 0c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Z"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">DISCORD</span>
-            </a>
-
-
-            <!-- KICK -->
-            <a
-                class="link"
-                href="https://kick.com/shakedim"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M4 3h6v6h4V3h6v7h-4v4h4v7h-6v-6h-4v6H4V3Z"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">KICK</span>
-
-                <span id="kickLive" class="kick-live">
-                    <span class="kick-live-dot"></span>
-                    LIVE
-                </span>
-            </a>
-
-
-            <!-- TIKTOK -->
-            <a
-                class="link"
-                href="https://www.tiktok.com/@shakedimm"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16.7 2c.4 2.2 1.6 3.7 3.7 4.1v3.2c-1.4 0-2.7-.4-3.7-1.1v6.9c0 4.1-3 6.9-7 6.9-3.7 0-6.5-2.7-6.5-6.2 0-3.8 3.1-6.5 7-6.5.4 0 .8 0 1.2.1v3.4c-.4-.1-.8-.2-1.2-.2-1.7 0-3 1.1-3 2.8 0 1.5 1.1 2.8 2.7 2.8 1.7 0 2.8-1.2 2.8-3.1V2h4Z"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">TIKTOK</span>
-            </a>
-
-
-            <!-- INSTAGRAM -->
-            <a
-                class="link"
-                href="https://www.instagram.com/shakedimm"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="5"/>
-                        <circle cx="12" cy="12" r="4"/>
-                        <circle cx="17.5" cy="6.5" r="1"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">INSTAGRAM</span>
-            </a>
-
-
-            <!-- YOUTUBE -->
-            <a
-                class="link"
-                href="https://www.youtube.com/Shakedim"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.6 3.9-6.6 3.9Z"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">YOUTUBE</span>
-            </a>
-
-
-            <!-- TIPS -->
-            <a
-                class="link"
-                href="https://botrix.live/k/shakedim/tip"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2v20M5 7h9a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11"/>
-                    </svg>
-                </span>
-
-                <span class="link-name">TIPS</span>
-            </a>
-
-        </div>
-
-        <div class="footer">
-            © SHAKEDIM
-        </div>
-
-    </main>
-
-</div>
-
-
-<script>
-
-/*
-===========================================================
-KICK LIVE STATUS
-===========================================================
-
-IMPORTANT:
-
-Change this URL after you create your Cloudflare Worker.
-
-Example:
-
-const LIVE_API =
-    "https://shakedim-live.your-subdomain.workers.dev";
-
-===========================================================
-*/
-
-const LIVE_API = "YOUR_CLOUDFLARE_WORKER_URL";
-
-
-const liveStatus = document.getElementById("liveStatus");
-const kickLive = document.getElementById("kickLive");
-
-
-function setLiveStatus(isLive) {
-
-    if (isLive) {
-
-        liveStatus.classList.add("active");
-
-        kickLive.classList.add("active");
-
-    } else {
-
-        liveStatus.classList.remove("active");
-
-        kickLive.classList.remove("active");
-
-    }
-}
-
-
-async function checkLiveStatus() {
-
-    try {
-
-        const response = await fetch(
-            LIVE_API + "?channel=shakedim",
-            {
-                cache: "no-store"
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error("Live API error");
-        }
-
-        const data = await response.json();
-
-        setLiveStatus(data.live === true);
-
-    } catch (error) {
-
-        /*
-         If the status server is unavailable,
-         don't incorrectly show LIVE.
-        */
-
-        setLiveStatus(false);
-
-        console.log("Could not check Kick live status.");
-
-    }
-}
-
-
-/*
-Check immediately when the page loads.
-*/
-checkLiveStatus();
-
-
-/*
-Check every 30 seconds.
-*/
-setInterval(
-    checkLiveStatus,
-    30 * 1000
-);
-
-</script>
+    <div class="page">
+
+        <main class="card">
+
+            <!-- LOGO -->
+            <div class="logo-wrapper">
+                <img
+                    src="logo.png"
+                    alt="SHAKEDIM Logo"
+                    class="logo"
+                >
+            </div>
+
+            <!-- NAME -->
+            <h1>SHAKEDIM</h1>
+
+            <!-- DESCRIPTION -->
+            <div class="subtitle">
+                Streamer &amp; Content Creator
+            </div>
+
+
+            <!-- SOCIAL LINKS -->
+            <div class="links">
+
+                <!-- DISCORD -->
+                <a
+                    class="link"
+                    href="https://discord.gg/djW2w2ZWRT"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M19.54 0c1.1 0 2 .9 2 2v20c0 1.1-.9 2-2 2H4.46c-1.1 0-2-.9-2-2V2c0-1.1.9-2 2-2h15.08ZM8.6 7.4c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Zm6.8 0c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Z"/>
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        DISCORD
+                    </span>
+                </a>
+
+
+                <!-- KICK -->
+                <a
+                    class="link"
+                    href="https://kick.com/shakedim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M4 3h6v6h4V3h6v7h-4v4h4v7h-6v-6h-4v6H4V3Z"/>
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        KICK
+                    </span>
+                </a>
+
+
+                <!-- TIKTOK -->
+                <a
+                    class="link"
+                    href="https://www.tiktok.com/@shakedimm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M16.7 2c.4 2.2 1.6 3.7 3.7 4.1v3.2c-1.4 0-2.7-.4-3.7-1.1v6.9c0 4.1-3 6.9-7 6.9-3.7 0-6.5-2.7-6.5-6.2 0-3.8 3.1-6.5 7-6.5.4 0 .8 0 1.2.1v3.4c-.4-.1-.8-.2-1.2-.2-1.7 0-3 1.1-3 2.8 0 1.5 1.1 2.8 2.7 2.8 1.7 0 2.8-1.2 2.8-3.1V2h4Z"/>
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        TIKTOK
+                    </span>
+                </a>
+
+
+                <!-- INSTAGRAM -->
+                <a
+                    class="link"
+                    href="https://www.instagram.com/shakedimm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="5"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            />
+
+                            <circle
+                                cx="17.5"
+                                cy="6.5"
+                                r="1"
+                                fill="currentColor"
+                                stroke="none"
+                            />
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        INSTAGRAM
+                    </span>
+                </a>
+
+
+                <!-- YOUTUBE -->
+                <a
+                    class="link"
+                    href="https://www.youtube.com/Shakedim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.6 3.9-6.6 3.9Z"/>
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        YOUTUBE
+                    </span>
+                </a>
+
+
+                <!-- TIPS -->
+                <a
+                    class="link"
+                    href="https://botrix.live/k/shakedim/tip"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+                            <path d="M12 2v20"/>
+                            <path d="M5 7h9a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11"/>
+                        </svg>
+                    </span>
+
+                    <span class="link-name">
+                        TIPS
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER -->
+            <div class="footer">
+                © SHAKEDIM
+            </div>
+
+        </main>
+
+    </div>
 
 </body>
 </html>
