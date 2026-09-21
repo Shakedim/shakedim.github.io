@@ -1,25 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>SHAKEDIM</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: #0b0b0f;
+            color: white;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .name {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .bio {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 35px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            padding: 17px;
+
+            background: #18181f;
+            border: 1px solid #292933;
+            border-radius: 14px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            transition: all 0.2s ease;
+        }
+
+        .link:hover {
+            transform: translateY(-3px);
+            background: #22222c;
+            border-color: #444451;
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>SHAKEDIM</h1>
+    <div class="container">
 
-    <p>Streamer & Content Creator</p>
+        <div class="name">
+            SHAKEDIM
+        </div>
 
-    <a href="https://kick.com/YOURNAME">KICK</a>
-    <br><br>
+        <div class="bio">
+            Streamer & Content Creator
+        </div>
 
-    <a href="https://instagram.com/YOURNAME">INSTAGRAM</a>
-    <br><br>
+        <div class="links">
 
-    <a href="https://tiktok.com/@YOURNAME">TIKTOK</a>
-    <br><br>
+            <a class="link" href="https://kick.com/shakedim" target="_blank">
+                KICK
+            </a>
 
-    <a href="https://discord.com/">DISCORD</a>
+            <a class="link" href="https://www.instagram.com/shakedimm" target="_blank">
+                INSTAGRAM
+            </a>
+
+            <a class="link" href="https://www.tiktok.com/@shakedimm" target="_blank">
+                TIKTOK
+            </a>
+
+            <a class="link" href="https://www.youtube.com/Shakedim" target="_blank">
+                YOUTUBE
+            </a>
+
+            <a class="link" href="https://botrix.live/k/shakedim/tip" target="_blank">
+                TIPS
+            </a>
+
+        </div>
+
+    </div>
 
 </body>
+
 </html>
