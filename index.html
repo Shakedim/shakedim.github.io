@@ -2,893 +2,1072 @@
 <html lang="he" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SHAKEDIM</title>
+<title>SHAKEDIM</title>
 
-    <style>
-
-        /* =====================================================
-           RESET
-        ===================================================== */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        html {
-            min-height: 100%;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        body {
-            min-height: 100vh;
+<style>
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            color: white;
-
-            overflow-x: hidden;
+/* =========================================================
+   RESET
+========================================================= */
 
-            background:
-                radial-gradient(
-                    ellipse at 50% -10%,
-                    rgba(177, 56, 255, 0.34),
-                    transparent 38%
-                ),
-                radial-gradient(
-                    ellipse at 0% 80%,
-                    rgba(48, 86, 255, 0.18),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    ellipse at 100% 65%,
-                    rgba(255, 44, 200, 0.13),
-                    transparent 32%
-                ),
-                #05030a;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+html {
+    scroll-behavior: smooth;
+}
 
-        /* =====================================================
-           TOPOGRAPHIC BACKGROUND
-        ===================================================== */
-
-        .background {
-            position: fixed;
-            inset: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
+body {
+    min-height: 100vh;
 
-            z-index: 0;
-        }
+    color: #fff;
 
+    font-family: "Rubik", Arial, sans-serif;
 
-        /*
-           Large topographic contour pattern
-        */
+    background:
+        radial-gradient(
+            ellipse at 50% 18%,
+            rgba(105, 0, 255, .16),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 50% 65%,
+            rgba(0, 80, 255, .08),
+            transparent 42%
+        ),
+        #03030b;
 
-        .topography {
-            position: absolute;
-
-            width: 1500px;
-            height: 1100px;
-
-            left: 50%;
-            top: 48%;
-
-            transform:
-                translate(-50%, -50%)
-                rotate(-8deg);
-
-            opacity: 0.42;
-
-            background-image:
-                repeating-radial-gradient(
-                    ellipse at center,
-                    transparent 0,
-                    transparent 34px,
-                    rgba(183, 71, 255, 0.13) 35px,
-                    transparent 36px,
-                    transparent 66px
-                );
-
-            filter:
-                blur(0.15px);
-
-            mask-image:
-                radial-gradient(
-                    ellipse,
-                    black 10%,
-                    rgba(0,0,0,0.8) 45%,
-                    transparent 78%
-                );
-
-            animation: topoMove 18s ease-in-out infinite alternate;
-        }
-
-
-        @keyframes topoMove {
-
-            0% {
-                transform:
-                    translate(-50%, -50%)
-                    rotate(-8deg)
-                    scale(1);
-            }
-
-            100% {
-                transform:
-                    translate(-50%, -48%)
-                    rotate(-5deg)
-                    scale(1.07);
-            }
-        }
-
-
-        /*
-           Second contour layer
-        */
-
-        .topography.two {
-            width: 1000px;
-            height: 900px;
-
-            left: 12%;
-            top: 75%;
-
-            opacity: 0.25;
+    overflow-x: hidden;
+}
 
-            transform:
-                translate(-50%, -50%)
-                rotate(25deg);
 
-            background-image:
-                repeating-radial-gradient(
-                    ellipse at center,
-                    transparent 0,
-                    transparent 28px,
-                    rgba(63, 130, 255, 0.18) 29px,
-                    transparent 30px,
-                    transparent 58px
-                );
-
-            animation:
-                topoMoveTwo 22s ease-in-out infinite alternate;
-        }
-
-
-        @keyframes topoMoveTwo {
-
-            from {
-                transform:
-                    translate(-50%, -50%)
-                    rotate(25deg)
-                    scale(1);
-            }
+/* =========================================================
+   TOPOGRAPHIC BACKGROUND
+========================================================= */
 
-            to {
-                transform:
-                    translate(-48%, -52%)
-                    rotate(20deg)
-                    scale(1.12);
-            }
-        }
+.background {
+    position: fixed;
+    inset: 0;
 
+    z-index: -10;
 
-        /*
-           Fine grid
-        */
+    overflow: hidden;
 
-        .grid {
-            position: absolute;
-            inset: 0;
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(76, 0, 130, .13),
+            transparent 35%
+        );
+}
 
-            background-image:
-                linear-gradient(
-                    rgba(180, 80, 255, 0.035) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(180, 80, 255, 0.035) 1px,
-                    transparent 1px
-                );
 
-            background-size: 55px 55px;
+/*
+    Main contour pattern
+*/
 
-            mask-image:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    black 20%,
-                    black 80%,
-                    transparent
-                );
-        }
+.topography {
+    position: absolute;
 
+    width: 150%;
+    height: 150%;
 
-        /*
-           Ambient glow
-        */
+    left: -25%;
+    top: -25%;
 
-        .glow {
-            position: absolute;
+    opacity: .48;
 
-            width: 500px;
-            height: 500px;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700' viewBox='0 0 700 700'%3E%3Cg fill='none' stroke='%237b25ff' stroke-opacity='.52' stroke-width='1.2'%3E%3Cpath d='M-50 120C100 30 160 230 310 120S530 30 760 130'/%3E%3Cpath d='M-50 145C100 55 160 255 310 145S530 55 760 155'/%3E%3Cpath d='M-50 170C100 80 160 280 310 170S530 80 760 180'/%3E%3Cpath d='M-50 195C100 105 160 305 310 195S530 105 760 205'/%3E%3Cpath d='M-50 220C100 130 160 330 310 220S530 130 760 230'/%3E%3Cpath d='M-50 390C100 300 180 500 330 390S560 300 760 400'/%3E%3Cpath d='M-50 415C100 325 180 525 330 415S560 325 760 425'/%3E%3Cpath d='M-50 440C100 350 180 550 330 440S560 350 760 450'/%3E%3Cpath d='M-50 465C100 375 180 575 330 465S560 375 760 475'/%3E%3Cpath d='M-50 490C100 400 180 600 330 490S560 400 760 500'/%3E%3Cpath d='M80 -50C20 100 230 150 100 310S30 550 170 760'/%3E%3Cpath d='M105 -50C45 100 255 150 125 310S55 550 195 760'/%3E%3Cpath d='M130 -50C70 100 280 150 150 310S80 550 220 760'/%3E%3Cpath d='M155 -50C95 100 305 150 175 310S105 550 245 760'/%3E%3C/g%3E%3C/svg%3E");
 
-            border-radius: 50%;
+    background-size: 700px 700px;
 
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(170, 0, 255, 0.13),
-                    transparent 68%
-                );
+    animation:
+        backgroundMove 40s linear infinite;
+}
 
-            filter: blur(25px);
+@keyframes backgroundMove {
 
-            left: 50%;
-            top: 25%;
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
 
-            transform: translate(-50%, -50%);
+    50% {
+        transform: translate(2%, -1%) scale(1.03);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+/*
+    Additional brighter contour layer
+*/
+
+.topography-bright {
+    position: absolute;
+
+    inset: -10%;
+
+    opacity: .17;
+
+    background-image:
+        repeating-radial-gradient(
+            ellipse at 20% 30%,
+            transparent 0,
+            transparent 48px,
+            rgba(174, 43, 255, .7) 49px,
+            transparent 51px
+        );
 
-            animation: glowPulse 7s ease-in-out infinite;
-        }
+    filter: blur(.4px);
 
+    transform:
+        rotate(-9deg)
+        scale(1.2);
+}
 
-        @keyframes glowPulse {
 
-            0%, 100% {
-                opacity: 0.65;
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
-            }
+/* =========================================================
+   STARS / LIGHT PARTICLES
+========================================================= */
 
-            50% {
-                opacity: 1;
-                transform:
-                    translate(-50%, -50%)
-                    scale(1.18);
-            }
-        }
+.stars,
+.stars::before,
+.stars::after {
+    position: absolute;
 
+    width: 100%;
+    height: 100%;
 
-        /* =====================================================
-           PAGE
-        ===================================================== */
+    content: "";
+}
 
-        .page {
-            min-height: 100vh;
+.stars {
+    background-image:
+        radial-gradient(
+            circle at 18% 22%,
+            rgba(255, 255, 255, .8) 0 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 82% 18%,
+            rgba(165, 92, 255, .8) 0 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 12% 63%,
+            rgba(91, 133, 255, .8) 0 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 88% 72%,
+            rgba(255, 0, 255, .8) 0 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 67% 52%,
+            rgba(255, 255, 255, .55) 0 1px,
+            transparent 2px
+        );
 
-            display: flex;
-            justify-content: center;
+    opacity: .75;
+}
 
-            padding: 55px 20px;
 
-            position: relative;
-            z-index: 2;
-        }
+/* =========================================================
+   GLOW ORBS
+========================================================= */
 
+.orb {
+    position: absolute;
 
-        /* =====================================================
-           MAIN CARD
-        ===================================================== */
+    border-radius: 50%;
 
-        .card {
-            width: 100%;
-            max-width: 570px;
+    filter: blur(80px);
 
-            padding: 42px 28px 30px;
+    pointer-events: none;
+}
 
-            border-radius: 30px;
+.orb.one {
+    width: 300px;
+    height: 300px;
 
-            position: relative;
+    background: rgba(129, 0, 255, .12);
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(19, 9, 31, 0.91),
-                    rgba(5, 4, 12, 0.94)
-                );
+    left: -100px;
+    top: 25%;
+}
 
-            border:
-                1px solid rgba(194, 79, 255, 0.28);
+.orb.two {
+    width: 280px;
+    height: 280px;
 
-            box-shadow:
-                0 0 50px rgba(116, 0, 255, 0.11),
-                inset 0 0 50px rgba(144, 0, 255, 0.025);
+    background: rgba(0, 91, 255, .10);
 
-            backdrop-filter: blur(22px);
+    right: -90px;
+    top: 55%;
+}
 
-            overflow: hidden;
-        }
+.orb.three {
+    width: 240px;
+    height: 240px;
 
+    background: rgba(255, 0, 190, .09);
 
-        /*
-           Subtle light at top of card
-        */
+    left: 50%;
+    top: 10%;
 
-        .card::before {
-            content: "";
+    transform: translateX(-50%);
+}
 
-            position: absolute;
 
-            left: 10%;
-            right: 10%;
-            top: 0;
+/* =========================================================
+   PAGE
+========================================================= */
 
-            height: 1px;
+.page {
+    width: 100%;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(216, 77, 255, 0.8),
-                    rgba(75, 127, 255, 0.8),
-                    transparent
-                );
+    min-height: 100vh;
 
-            box-shadow:
-                0 0 15px rgba(200, 60, 255, 0.7);
-        }
+    display: flex;
+    justify-content: center;
 
+    padding:
+        62px 20px 75px;
+}
 
-        /* =====================================================
-           LOGO
-        ===================================================== */
 
-        .logo-wrapper {
-            display: flex;
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
-            justify-content: center;
-            align-items: center;
+.container {
+    width: 100%;
+    max-width: 700px;
 
-            margin-bottom: 17px;
-        }
+    text-align: center;
+}
 
 
-        .logo {
-            width: 150px;
-            height: 150px;
+/* =========================================================
+   LOGO
+========================================================= */
 
-            display: block;
+.logo-area {
+    display: flex;
 
-            object-fit: contain;
+    justify-content: center;
+    align-items: center;
 
-            filter:
-                drop-shadow(
-                    0 0 8px
-                    rgba(204, 0, 255, 0.8)
-                )
-                drop-shadow(
-                    0 0 25px
-                    rgba(84, 77, 255, 0.42)
-                );
+    margin-bottom: 20px;
 
-            animation: logoGlow 4s ease-in-out infinite;
-        }
+    position: relative;
+}
 
 
-        @keyframes logoGlow {
+/*
+    RGB outer ring
+*/
 
-            0%, 100% {
-                filter:
-                    drop-shadow(
-                        0 0 8px
-                        rgba(204, 0, 255, 0.75)
-                    )
-                    drop-shadow(
-                        0 0 22px
-                        rgba(84, 77, 255, 0.38)
-                    );
-            }
+.logo-frame {
+    width: 245px;
+    height: 245px;
 
-            50% {
-                filter:
-                    drop-shadow(
-                        0 0 14px
-                        rgba(235, 0, 255, 0.95)
-                    )
-                    drop-shadow(
-                        0 0 32px
-                        rgba(62, 108, 255, 0.55)
-                    );
-            }
-        }
+    position: relative;
 
+    border-radius: 50%;
 
-        /* =====================================================
-           NAME
-        ===================================================== */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        h1 {
-            text-align: center;
+    filter:
+        drop-shadow(
+            0 0 10px rgba(255, 0, 255, .5)
+        )
+        drop-shadow(
+            0 0 30px rgba(0, 100, 255, .35)
+        );
+}
 
-            direction: ltr;
 
-            font-size: 43px;
+/*
+    Rotating RGB ring
+*/
 
-            font-weight: 900;
+.rgb-ring {
+    position: absolute;
 
-            letter-spacing: 4px;
+    inset: 0;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #ffffff 0%,
-                    #d65cff 35%,
-                    #8f78ff 65%,
-                    #ffffff 100%
-                );
+    border-radius: 50%;
 
-            background-size: 220% auto;
+    background:
+        conic-gradient(
+            from 0deg,
 
-            -webkit-background-clip: text;
-            background-clip: text;
+            #ff006a,
+            #ff00e6,
+            #7b00ff,
+            #4d62ff,
+            #00d9ff,
+            #00ffea,
+            #00ff7b,
+            #ffe600,
+            #ff6a00,
+            #ff006a
+        );
 
-            color: transparent;
+    animation:
+        rotateRGB 4s linear infinite;
 
-            animation:
-                nameGradient 5s linear infinite;
-        }
+    box-shadow:
+        0 0 12px rgba(255, 0, 255, .7),
+        0 0 30px rgba(0, 132, 255, .35);
+}
 
 
-        @keyframes nameGradient {
+/*
+    Black center which creates the ring
+*/
 
-            to {
-                background-position: 220% center;
-            }
-        }
+.rgb-ring::after {
+    content: "";
 
+    position: absolute;
 
-        /* =====================================================
-           DESCRIPTION
-        ===================================================== */
+    inset: 6px;
 
-        .description {
-            max-width: 490px;
+    border-radius: 50%;
 
-            margin:
-                12px auto 0;
+    background: #04030a;
+}
 
-            text-align: center;
 
-            direction: rtl;
+/*
+    Image circle
+*/
 
-            color:
-                rgba(255, 255, 255, 0.72);
+.logo-inner {
+    position: relative;
 
-            font-size: 14px;
+    z-index: 3;
 
-            line-height: 1.75;
+    width: 226px;
+    height: 226px;
 
-            font-weight: 500;
-        }
+    border-radius: 50%;
 
+    overflow: hidden;
 
-        /* =====================================================
-           LINKS
-        ===================================================== */
+    background:
+        radial-gradient(
+            circle,
+            #161021,
+            #03030a
+        );
 
-        .links {
-            display: flex;
+    border:
+        2px solid rgba(255, 255, 255, .08);
 
-            flex-direction: column;
+    box-shadow:
+        inset 0 0 35px rgba(0, 0, 0, .85),
+        0 0 18px rgba(115, 0, 255, .25);
+}
 
-            gap: 13px;
 
-            margin-top: 29px;
-        }
+/*
+    Your image
+*/
 
+.logo {
+    width: 100%;
+    height: 100%;
 
-        /* =====================================================
-           LINK BUTTON
-        ===================================================== */
+    display: block;
 
-        .link {
-            width: 100%;
-            min-height: 65px;
+    object-fit: cover;
 
-            display: flex;
+    object-position: center;
 
-            align-items: center;
+    border-radius: 50%;
+}
 
-            position: relative;
 
-            padding: 0 21px;
+/*
+    RGB animation
+*/
 
-            border-radius: 16px;
+@keyframes rotateRGB {
 
-            color: white;
+    from {
+        transform: rotate(0deg);
+    }
 
-            text-decoration: none;
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            overflow: hidden;
 
-            background:
-                linear-gradient(
-                    100deg,
-                    rgba(255,255,255,0.045),
-                    rgba(255,255,255,0.012)
-                );
+/* =========================================================
+   BRAND NAME
+========================================================= */
 
-            border:
-                1px solid
-                var(--border);
+.brand {
+    margin-top: 4px;
 
-            box-shadow:
-                inset 0 0 20px
-                var(--inner-glow);
+    font-family: "Pacifico", cursive;
 
-            transition:
-                transform .22s ease,
-                border-color .22s ease,
-                box-shadow .22s ease,
-                background .22s ease;
-        }
+    font-size: clamp(
+        54px,
+        8vw,
+        88px
+    );
 
+    line-height: 1;
 
-        /*
-           Colored glow line
-        */
+    color: #f6d9ff;
 
-        .link::before {
-            content: "";
+    text-shadow:
+        0 0 6px rgba(255, 255, 255, .7),
+        0 0 18px rgba(220, 80, 255, .8),
+        0 0 40px rgba(160, 0, 255, .5);
 
-            position: absolute;
+    direction: ltr;
 
-            top: 0;
-            bottom: 0;
+    white-space: nowrap;
+}
 
-            right: 0;
 
-            width: 3px;
+/* little heart */
 
-            background: var(--accent);
+.brand-heart {
+    display: inline-block;
 
-            box-shadow:
-                0 0 12px var(--accent),
-                0 0 25px var(--accent);
+    font-family: Arial, sans-serif;
 
-            opacity: .9;
-        }
+    font-size: .35em;
 
+    color: #ff67ef;
 
-        /*
-           Hover shine
-        */
+    vertical-align: top;
 
-        .link::after {
-            content: "";
+    margin-right: 8px;
 
-            position: absolute;
+    text-shadow:
+        0 0 12px #ff00d9;
+}
 
-            width: 140px;
-            height: 100%;
 
-            top: 0;
-            left: -180px;
+/* =========================================================
+   DESCRIPTION
+========================================================= */
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255,255,255,0.09),
-                    transparent
-                );
+.description {
+    max-width: 650px;
 
-            transform: skewX(-20deg);
+    margin:
+        20px auto 0;
 
-            transition:
-                left .55s ease;
-        }
+    padding:
+        0 10px;
 
+    color:
+        rgba(255,255,255,.88);
 
-        .link:hover::after {
-            left: 110%;
-        }
+    font-size: 17px;
 
+    font-weight: 500;
 
-        .link:hover {
-            transform: translateY(-3px);
+    line-height: 1.65;
 
-            border-color:
-                var(--accent);
+    text-align: center;
+}
 
-            background:
-                linear-gradient(
-                    100deg,
-                    var(--hover-bg),
-                    rgba(255,255,255,0.025)
-                );
 
-            box-shadow:
-                0 0 18px
-                var(--outer-glow),
+/* =========================================================
+   SOCIAL BUTTONS
+========================================================= */
 
-                inset 0 0 22px
-                var(--inner-glow);
-        }
+.links {
+    display: flex;
 
+    flex-direction: column;
 
-        /* =====================================================
-           ICON
-        ===================================================== */
+    gap: 15px;
 
-        .icon {
-            width: 29px;
-            height: 29px;
+    margin-top: 31px;
+}
 
-            display: flex;
 
-            align-items: center;
-            justify-content: center;
+/*
+    Button
+*/
 
-            margin-left: 15px;
+.link {
+    width: 100%;
 
-            color: var(--accent);
+    min-height: 92px;
 
-            flex-shrink: 0;
+    position: relative;
 
-            filter:
-                drop-shadow(
-                    0 0 7px
-                    var(--accent)
-                );
+    display: grid;
 
-            transition:
-                transform .22s ease;
-        }
+    grid-template-columns:
+        105px
+        1px
+        1fr
+        1fr
+        38px;
 
+    align-items: center;
 
-        .link:hover .icon {
-            transform:
-                scale(1.1)
-                rotate(-3deg);
-        }
+    direction: ltr;
 
+    padding:
+        0 20px;
 
-        .icon svg {
-            width: 100%;
-            height: 100%;
-        }
+    text-decoration: none;
 
+    color: white;
 
-        /* =====================================================
-           TEXT
-        ===================================================== */
+    overflow: hidden;
 
-        .link-name {
-            font-size: 15px;
+    border-radius: 22px;
 
-            font-weight: 900;
+    background:
+        linear-gradient(
+            105deg,
+            rgba(8, 8, 18, .94),
+            rgba(9, 8, 19, .84)
+        );
 
-            letter-spacing: 1.4px;
+    border:
+        2px solid var(--accent);
 
-            direction: ltr;
-        }
+    box-shadow:
+        0 0 10px var(--glow),
+        0 0 25px var(--glow-soft),
+        inset 0 0 30px rgba(0,0,0,.35);
 
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
 
-        /* =====================================================
-           INDIVIDUAL BUTTON COLORS
-        ===================================================== */
 
-        /*
-           DISCORD
-        */
+/*
+    Hover
+*/
 
-        .discord {
-            --accent: #7289da;
-            --border: rgba(114,137,218,.35);
-            --inner-glow: rgba(114,137,218,.05);
-            --outer-glow: rgba(114,137,218,.25);
-            --hover-bg: rgba(114,137,218,.10);
-        }
+.link:hover {
+    transform: translateY(-4px) scale(1.008);
 
+    box-shadow:
+        0 0 15px var(--glow),
+        0 0 35px var(--glow-soft),
+        inset 0 0 35px rgba(0,0,0,.3);
+}
 
-        /*
-           KICK
-        */
 
-        .kick {
-            --accent: #53ff85;
-            --border: rgba(83,255,133,.28);
-            --inner-glow: rgba(83,255,133,.045);
-            --outer-glow: rgba(83,255,133,.25);
-            --hover-bg: rgba(83,255,133,.08);
-        }
+/*
+    Decorative image-like shape
+    on right side
+*/
 
+.link::before {
+    content: "";
 
-        /*
-           TIKTOK
-        */
+    position: absolute;
 
-        .tiktok {
-            --accent: #25f4ee;
-            --border: rgba(37,244,238,.28);
-            --inner-glow: rgba(37,244,238,.04);
-            --outer-glow: rgba(37,244,238,.22);
-            --hover-bg: rgba(37,244,238,.07);
-        }
+    right: -35px;
+    top: -30px;
 
+    width: 220px;
+    height: 150px;
 
-        /*
-           INSTAGRAM
-        */
+    opacity: .13;
 
-        .instagram {
-            --accent: #ff4fa3;
-            --border: rgba(255,79,163,.3);
-            --inner-glow: rgba(255,79,163,.045);
-            --outer-glow: rgba(255,79,163,.25);
-            --hover-bg: rgba(255,79,163,.08);
-        }
+    background:
+        radial-gradient(
+            ellipse,
+            var(--accent),
+            transparent 68%
+        );
 
+    filter: blur(20px);
 
-        /*
-           YOUTUBE
-        */
+    pointer-events: none;
+}
 
-        .youtube {
-            --accent: #ff4055;
-            --border: rgba(255,64,85,.3);
-            --inner-glow: rgba(255,64,85,.045);
-            --outer-glow: rgba(255,64,85,.24);
-            --hover-bg: rgba(255,64,85,.08);
-        }
 
+/*
+    Subtle diagonal shine
+*/
 
-        /*
-           TIPS
-        */
+.link::after {
+    content: "";
 
-        .tips {
-            --accent: #ffd34e;
-            --border: rgba(255,211,78,.28);
-            --inner-glow: rgba(255,211,78,.045);
-            --outer-glow: rgba(255,211,78,.23);
-            --hover-bg: rgba(255,211,78,.08);
-        }
+    position: absolute;
 
+    top: 0;
+    left: -150%;
 
-        /* =====================================================
-           FOOTER
-        ===================================================== */
+    width: 70%;
+    height: 100%;
 
-        .footer {
-            margin-top: 25px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.07),
+            transparent
+        );
 
-            text-align: center;
+    transform: skewX(-20deg);
 
-            direction: ltr;
+    transition:
+        left .7s ease;
 
-            color:
-                rgba(255,255,255,.25);
+    pointer-events: none;
+}
 
-            font-size: 10px;
+.link:hover::after {
+    left: 140%;
+}
 
-            letter-spacing: 1px;
-        }
 
+/* =========================================================
+   ICON AREA
+========================================================= */
 
-        /* =====================================================
-           MOBILE
-        ===================================================== */
+.icon-box {
+    height: 55px;
 
-        @media (max-width: 600px) {
+    display: flex;
 
-            .page {
-                padding:
-                    25px 13px;
-            }
+    justify-content: center;
+    align-items: center;
 
-            .card {
-                padding:
-                    32px 17px 25px;
+    position: relative;
 
-                border-radius: 23px;
-            }
+    z-index: 2;
+}
 
-            .logo {
-                width: 132px;
-                height: 132px;
-            }
+.icon-box svg {
+    width: 51px;
+    height: 51px;
 
-            h1 {
-                font-size: 34px;
-                letter-spacing: 3px;
-            }
+    filter:
+        drop-shadow(
+            0 0 8px var(--accent)
+        );
+}
 
-            .description {
-                font-size: 13px;
 
-                line-height: 1.8;
+/* separator */
 
-                padding:
-                    0 5px;
-            }
+.separator {
+    width: 1px;
 
-            .link {
-                min-height: 61px;
+    height: 50px;
 
-                padding:
-                    0 18px;
-            }
+    background:
+        var(--accent);
 
-            .icon {
-                width: 26px;
-                height: 26px;
+    opacity: .55;
 
-                margin-left: 13px;
-            }
-        }
+    box-shadow:
+        0 0 7px var(--accent);
+}
 
 
-        /* =====================================================
-           REDUCED MOTION
-        ===================================================== */
+/* =========================================================
+   MAIN LABEL
+========================================================= */
 
-        @media (prefers-reduced-motion: reduce) {
+.main-label {
+    padding-left: 25px;
 
-            .logo,
-            h1,
-            .topography,
-            .glow {
-                animation: none;
-            }
+    text-align: left;
 
-            .link {
-                transition: none;
-            }
-        }
+    font-size: 21px;
 
-    </style>
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SMALL DESCRIPTION
+========================================================= */
+
+.small-label {
+    text-align: left;
+
+    font-size: 12px;
+
+    letter-spacing: 1.5px;
+
+    color:
+        var(--accent);
+
+    white-space: nowrap;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 10px var(--accent);
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.arrow {
+    font-size: 40px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+    color: white;
+
+    text-align: center;
+
+    transition:
+        transform .25s ease;
+}
+
+.link:hover .arrow {
+    transform: translateX(-5px);
+}
+
+
+/* =========================================================
+   INDIVIDUAL COLORS
+========================================================= */
+
+
+/* DISCORD */
+
+.discord {
+    --accent: #617eff;
+    --glow: rgba(88, 116, 255, .9);
+    --glow-soft: rgba(65, 89, 255, .35);
+}
+
+
+/* KICK */
+
+.kick {
+    --accent: #29ff72;
+    --glow: rgba(35, 255, 106, .9);
+    --glow-soft: rgba(0, 255, 95, .3);
+}
+
+
+/* TIKTOK */
+
+.tiktok {
+    --accent: #28e9ff;
+    --glow: rgba(0, 230, 255, .9);
+    --glow-soft: rgba(255, 0, 170, .35);
+}
+
+
+/* INSTAGRAM */
+
+.instagram {
+    --accent: #ff38c7;
+    --glow: rgba(255, 40, 190, .9);
+    --glow-soft: rgba(255, 70, 110, .35);
+}
+
+
+/* YOUTUBE */
+
+.youtube {
+    --accent: #ff3949;
+    --glow: rgba(255, 40, 50, .9);
+    --glow-soft: rgba(255, 0, 0, .35);
+}
+
+
+/* TIPS */
+
+.tips {
+    --accent: #ffc62e;
+    --glow: rgba(255, 190, 30, .9);
+    --glow-soft: rgba(255, 150, 0, .3);
+}
+
+
+/* =========================================================
+   BOTTOM DECORATION
+========================================================= */
+
+.bottom-text {
+    margin-top: 65px;
+
+    font-family: "Pacifico", cursive;
+
+    color:
+        #c96cff;
+
+    font-size: 25px;
+
+    line-height: 1.5;
+
+    text-shadow:
+        0 0 12px rgba(190, 0, 255, .8);
+
+    direction: ltr;
+}
+
+.bottom-heart {
+    display: block;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 24px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    margin-top: 25px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(255,255,255,.25);
+
+    direction: ltr;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .page {
+        padding:
+            35px 13px 50px;
+    }
+
+    .logo-frame {
+        width: 185px;
+        height: 185px;
+    }
+
+    .logo-inner {
+        width: 170px;
+        height: 170px;
+    }
+
+    .brand {
+        font-size: 53px;
+    }
+
+    .description {
+        font-size: 14px;
+
+        line-height: 1.75;
+    }
+
+    .links {
+        gap: 12px;
+    }
+
+    .link {
+        min-height: 74px;
+
+        grid-template-columns:
+            70px
+            1px
+            1fr
+            1fr
+            25px;
+
+        padding:
+            0 12px;
+
+        border-radius: 17px;
+    }
+
+    .icon-box svg {
+        width: 39px;
+        height: 39px;
+    }
+
+    .separator {
+        height: 40px;
+    }
+
+    .main-label {
+        font-size: 16px;
+
+        padding-left: 12px;
+    }
+
+    .small-label {
+        font-size: 8px;
+
+        letter-spacing: .8px;
+    }
+
+    .arrow {
+        font-size: 30px;
+    }
+
+    .bottom-text {
+        margin-top: 45px;
+
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .logo-frame {
+        width: 160px;
+        height: 160px;
+    }
+
+    .logo-inner {
+        width: 147px;
+        height: 147px;
+    }
+
+    .brand {
+        font-size: 45px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .link {
+        grid-template-columns:
+            57px
+            1px
+            1fr
+            1fr
+            20px;
+    }
+
+    .main-label {
+        font-size: 14px;
+    }
+
+    .small-label {
+        font-size: 7px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .topography,
+    .rgb-ring,
+    .link {
+        animation: none;
+        transition: none;
+    }
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-    <!-- =====================================================
-         BACKGROUND
-    ===================================================== -->
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
 
-    <div class="background">
+<div class="background">
 
-        <div class="topography"></div>
+    <div class="topography"></div>
 
-        <div class="topography two"></div>
+    <div class="topography-bright"></div>
 
-        <div class="grid"></div>
+    <div class="stars"></div>
 
-        <div class="glow"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
 
-    </div>
-
-
-
-    <!-- =====================================================
-         PAGE
-    ===================================================== -->
-
-    <div class="page">
-
-        <main class="card">
+</div>
 
 
-            <!-- LOGO -->
 
-            <div class="logo-wrapper">
+<!-- =======================================================
+     PAGE
+======================================================= -->
+
+<main class="page">
+
+<div class="container">
+
+
+    <!-- ===================================================
+         LOGO
+    ==================================================== -->
+
+    <div class="logo-area">
+
+        <div class="logo-frame">
+
+            <div class="rgb-ring"></div>
+
+            <div class="logo-inner">
+
+                <!--
+                    החליפי את logo.png בתמונה שאת רוצה.
+                    היא תיחתך אוטומטית לעיגול.
+                -->
 
                 <img
                     src="logo.png"
@@ -898,257 +1077,345 @@
 
             </div>
 
-
-
-            <!-- NAME -->
-
-            <h1>
-                SHAKEDIM
-            </h1>
-
-
-
-            <!-- DESCRIPTION -->
-
-            <div class="description">
-
-                גיימרית 🎮 משחקים, אומיגל, משחקי צופים ולייבים של צחוקים.
-                שטויות, רגעים הזויים, וייבים אש ואווירה טובה.
-                תבואו ללייב ותהיו חלק מהכיף 💜
-
-            </div>
-
-
-
-            <!-- =================================================
-                 LINKS
-            ================================================= -->
-
-            <div class="links">
-
-
-                <!-- DISCORD -->
-
-                <a
-                    class="link discord"
-                    href="https://discord.gg/djW2w2ZWRT"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-
-                            <path d="M19.54 0c1.1 0 2 .9 2 2v20c0 1.1-.9 2-2 2H4.46c-1.1 0-2-.9-2-2V2c0-1.1.9-2 2-2h15.08ZM8.6 7.4c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Zm6.8 0c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Z"/>
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        DISCORD
-                    </span>
-
-                </a>
-
-
-
-                <!-- KICK -->
-
-                <a
-                    class="link kick"
-                    href="https://kick.com/shakedim"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-
-                            <path d="M4 3h6v6h4V3h6v7h-4v4h4v7h-6v-6h-4v6H4V3Z"/>
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        KICK
-                    </span>
-
-                </a>
-
-
-
-                <!-- TIKTOK -->
-
-                <a
-                    class="link tiktok"
-                    href="https://www.tiktok.com/@shakedimm"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-
-                            <path d="M16.7 2c.4 2.2 1.6 3.7 3.7 4.1v3.2c-1.4 0-2.7-.4-3.7-1.1v6.9c0 4.1-3 6.9-7 6.9-3.7 0-6.5-2.7-6.5-6.2 0-3.8 3.1-6.5 7-6.5.4 0 .8 0 1.2.1v3.4c-.4-.1-.8-.2-1.2-.2-1.7 0-3 1.1-3 2.8 0 1.5 1.1 2.8 2.7 2.8 1.7 0 2.8-1.2 2.8-3.1V2h4Z"/>
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        TIKTOK
-                    </span>
-
-                </a>
-
-
-
-                <!-- INSTAGRAM -->
-
-                <a
-                    class="link instagram"
-                    href="https://www.instagram.com/shakedimm"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <rect
-                                x="3"
-                                y="3"
-                                width="18"
-                                height="18"
-                                rx="5"
-                            />
-
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="4"
-                            />
-
-                            <circle
-                                cx="17.5"
-                                cy="6.5"
-                                r="1"
-                                fill="currentColor"
-                                stroke="none"
-                            />
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        INSTAGRAM
-                    </span>
-
-                </a>
-
-
-
-                <!-- YOUTUBE -->
-
-                <a
-                    class="link youtube"
-                    href="https://www.youtube.com/Shakedim"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-
-                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.6 3.9-6.6 3.9Z"/>
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        YOUTUBE
-                    </span>
-
-                </a>
-
-
-
-                <!-- TIPS -->
-
-                <a
-                    class="link tips"
-                    href="https://botrix.live/k/shakedim/tip"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <span class="icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                        >
-
-                            <path d="M12 2v20"/>
-
-                            <path d="M5 7h9a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11"/>
-
-                        </svg>
-
-                    </span>
-
-                    <span class="link-name">
-                        TIPS
-                    </span>
-
-                </a>
-
-
-            </div>
-
-
-
-            <!-- FOOTER -->
-
-            <div class="footer">
-                © SHAKEDIM
-            </div>
-
-
-        </main>
+        </div>
 
     </div>
 
 
-</body>
 
+    <!-- ===================================================
+         BRAND
+    ==================================================== -->
+
+    <div class="brand">
+
+        Shakedim
+
+        <span class="brand-heart">
+            ♡
+        </span>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         DESCRIPTION
+    ==================================================== -->
+
+    <div class="description">
+
+        גיימרית 🎮 משחקים, אומיגל, משחקי צופים ולייבים של צחוקים.
+        שטויות, רגעים הזויים, וייבים אש ואווירה טובה.
+        תבואו ללייב ותהיו חלק מהכיף 💜
+
+    </div>
+
+
+
+    <!-- ===================================================
+         LINKS
+    ==================================================== -->
+
+    <div class="links">
+
+
+        <!-- DISCORD -->
+
+        <a
+            href="https://discord.gg/djW2w2ZWRT"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link discord"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path d="M19.54 0c1.1 0 2 .9 2 2v20c0 1.1-.9 2-2 2H4.46c-1.1 0-2-.9-2-2V2c0-1.1.9-2 2-2h15.08ZM8.6 7.4c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Zm6.8 0c-.8 0-1.5.3-2 .8-.5.5-.8 1.2-.8 2.1 0 1.4 1.2 2.6 2.7 2.6 1.5 0 2.7-1.2 2.7-2.6 0-.9-.3-1.6-.8-2.1-.5-.5-1.2-.8-2-.8Z"/>
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                DISCORD
+            </div>
+
+            <div class="small-label">
+                JOIN THE COMMUNITY
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+
+        <!-- KICK -->
+
+        <a
+            href="https://kick.com/shakedim"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link kick"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path d="M4 3h6v6h4V3h6v7h-4v4h4v7h-6v-6h-4v6H4V3Z"/>
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                KICK
+            </div>
+
+            <div class="small-label">
+                WATCH ME ON KICK
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+
+        <!-- TIKTOK -->
+
+        <a
+            href="https://www.tiktok.com/@shakedimm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link tiktok"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path d="M16.7 2c.4 2.2 1.6 3.7 3.7 4.1v3.2c-1.4 0-2.7-.4-3.7-1.1v6.9c0 4.1-3 6.9-7 6.9-3.7 0-6.5-2.7-6.5-6.2 0-3.8 3.1-6.5 7-6.5.4 0 .8 0 1.2.1v3.4c-.4-.1-.8-.2-1.2-.2-1.7 0-3 1.1-3 2.8 0 1.5 1.1 2.8 2.7 2.8 1.7 0 2.8-1.2 2.8-3.1V2h4Z"/>
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                TIKTOK
+            </div>
+
+            <div class="small-label">
+                SHORTS &amp; FUN
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+
+        <!-- INSTAGRAM -->
+
+        <a
+            href="https://www.instagram.com/shakedimm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link instagram"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+
+                    <rect
+                        x="3"
+                        y="3"
+                        width="18"
+                        height="18"
+                        rx="5"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="4"
+                    />
+
+                    <circle
+                        cx="17.5"
+                        cy="6.5"
+                        r="1"
+                        fill="currentColor"
+                        stroke="none"
+                    />
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                INSTAGRAM
+            </div>
+
+            <div class="small-label">
+                UPDATES &amp; BEHIND THE SCENES
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+
+        <!-- YOUTUBE -->
+
+        <a
+            href="https://www.youtube.com/Shakedim"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link youtube"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+
+                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.6 3.9-6.6 3.9Z"/>
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                YOUTUBE
+            </div>
+
+            <div class="small-label">
+                HIGHLIGHTS &amp; MORE
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+
+        <!-- TIPS -->
+
+        <a
+            href="https://botrix.live/k/shakedim/tip"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link tips"
+        >
+
+            <div class="icon-box">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+
+                    <path d="M12 2L14.5 7.5L20.5 8L16 12L17.5 18L12 15L6.5 18L8 12L3.5 8L9.5 7.5Z"/>
+
+                </svg>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="main-label">
+                TIPS
+            </div>
+
+            <div class="small-label">
+                SUPPORT THE STREAM
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ===================================================
+         BOTTOM TEXT
+    ==================================================== -->
+
+    <div class="bottom-text">
+
+        Game On.<br>
+        Bigger Dreams.
+
+        <span class="bottom-heart">
+            ♡
+        </span>
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        © SHAKEDIM
+    </div>
+
+
+</div>
+
+</main>
+
+</body>
 </html>
